@@ -31,11 +31,12 @@ def main():
     try:
         equation = equation.replace(" ", "")
         left, right = equation.split("=")
-        tokens = parse_side(left, "left"), parse_side(right, "right")
+        tokens = parse_side(left, "left") + parse_side(right, "right")
+        reduce_equation(tokens)
         print(equation)
         print(tokens)
-    except:
-        print("Error")
+    except Exception as e:
+        print("Error", e)
 
 if __name__ == "__main__":
     main()
