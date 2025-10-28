@@ -12,6 +12,27 @@ def parse_side(side_str, side_label):
         tokens.append({"coef": coef, "power": power, "side": side_label})
     return tokens
 
+def solve_posdelta(reduced, delta):
+    a = int(reduced.get(2))
+    b = int(reduced.get(1))
+    delta_abs = abs(delta)
+    
+    real_num = -b
+    imag_num = int(sqrt(delta_abs))
+    denom = 2 * a
+
+    real_gcd = gcd(abs(real_num), abs(denom))
+    real_num_reduced = real_num // real_gcd
+    real_denom_reduced = denom // real_gcd
+
+    imag_gcd = gcd(imag_num, abs(denom))
+    imag_num_reduced = imag_num // imag_gcd
+    imag_denom_reduced = denom // imag_gcd
+    
+    print("Discriminant is strictly negative, the two complex solutions are:")
+    print(f"{real_num_reduced}/{real_denom_reduced} + {imag_num_reduced}i/{imag_denom_reduced}")
+    print(f"{real_num_reduced}/{real_denom_reduced} - {imag_num_reduced}i/{imag_denom_reduced}")
+
 def reduce_equation(tokens):
     reduced = {}
     for term in tokens:
@@ -54,13 +75,13 @@ def solve_equation(reduced, degree):
             X1 = (-reduced.get(1) - sqrt(delta)) / (2 * reduced.get(2))
             X2 = (-reduced.get(1) + sqrt(delta)) / (2 * reduced.get(2))
             print(f"{X1}\n {X2}")
-        if (delta < 0):
-            print("Discriminant is strictly negative, the two complex solutions are:")
-            print(f"{-reduced.get(1)}{-sqrt(delta)}")
+        if delta < 0:
+            solve_posdelta(reduced, delta)
         else:
             X = -reduced.get(1) / (2 * reduced.get(2))
             print(f"The solution is:\n{X}")
-    print("The polynomial degree is strictly greater than 2, I can't solve.")
+    else:
+        print("The polynomial degree is strictly greater than 2, I can't solve.")
 
 def main():
     if (len(sys.argv) < 2):
