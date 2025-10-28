@@ -20,12 +20,10 @@ def reduce_equation(tokens):
         if term["side"] == "right":
             coef = -coef
         reduced[power] = reduced.get(power, 0) + coef
-    print(f"Brut Form Before: {reduced}")
     if (reduced.__len__() == 1 and reduced.get(0) == 0):
         reduced = {p: c for p, c in reduced.items()}
     else:
         reduced = {p: c for p, c in reduced.items() if abs(c) > 1e-12}
-    print(f"Brut Form After: {reduced}")
     terms = []
     for power in sorted(reduced.keys()):
         coef = reduced[power]
@@ -76,7 +74,6 @@ def main():
         equation = equation.replace(" ", "")
         left, right = equation.split("=")
         tokens = parse_side(left, "left") + parse_side(right, "right")
-        #print(f"Parsed equation: {tokens}")
         reduced, degree = reduce_equation(tokens)
         solve_equation(reduced, degree)
     except Exception as e:
