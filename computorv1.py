@@ -35,8 +35,8 @@ def parse_side(side_str, side_label):
 
 
 def solve_posdelta(reduced, delta):
-    a = int(reduced.get(2))
-    b = int(reduced.get(1))
+    a = int(reduced.get(2, 0))
+    b = int(reduced.get(1, 0))
     delta_abs = abs(delta)
 
     real_num = -b
