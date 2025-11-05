@@ -99,11 +99,11 @@ def solve_equation(reduced, degree):
         if (reduced.get(0) == None):
             print("The solution is: 0")
             return
-        X = -(reduced.get(0) / reduced.get(1))
+        X = -(reduced.get(0) / reduced.get(1, 0))
         print(f"The Solution is:\n{X}")
 
     elif degree == 2:
-        delta = reduced.get(1) ** 2 - 4 * reduced.get(2) * reduced.get(0)
+        delta = reduced.get(1, 0) ** 2 - 4 * reduced.get(2, 0) * reduced.get(0, 0)
 
         if delta > 0:
             print("Discriminant is strictly positive, the two solutions are:")
