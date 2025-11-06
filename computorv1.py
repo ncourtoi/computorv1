@@ -3,11 +3,6 @@ import re
 
 term_pattern = re.compile(r'([+-]?\d*\.?\d*)\*X\^(\d+)')
 
-def my_gcd(a, b):
-    while b:
-        a, b = b, a % b
-    return abs(a)
-
 
 def my_sqrt(x, epsilon=1e-10):
     if x < 0:
@@ -35,25 +30,17 @@ def parse_side(side_str, side_label):
 
 
 def solve_posdelta(reduced, delta):
-    a = int(reduced.get(2, 0))
-    b = int(reduced.get(1, 0))
+    a = reduced.get(2, 0)
+    b = reduced.get(1, 0)
     delta_abs = abs(delta)
 
-    real_num = -b
-    imag_num = int(my_sqrt(delta_abs))
-    denom = 2 * a
-
-    real_gcd = my_gcd(abs(real_num), abs(denom))
-    real_num_reduced = real_num // real_gcd
-    real_denom_reduced = denom // real_gcd
-
-    imag_gcd = my_gcd(imag_num, abs(denom))
-    imag_num_reduced = imag_num // imag_gcd
-    imag_denom_reduced = denom // imag_gcd
+    real_part = -b / (2 * a)
+    imag_part = my_sqrt(delta_abs) / (2 * a)
 
     print("Discriminant is strictly negative, the two complex solutions are:")
-    print(f"{real_num_reduced}/{real_denom_reduced} + {imag_num_reduced}i/{imag_denom_reduced}")
-    print(f"{real_num_reduced}/{real_denom_reduced} - {imag_num_reduced}i/{imag_denom_reduced}")
+    print(f"{real_part} + {imag_part}i")
+    print(f"{real_part} - {imag_part}i")
+
 
 def print_reduced(reduced):
     terms = []
